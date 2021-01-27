@@ -2,16 +2,23 @@
     <Include file="Libs\embeds.xml"/>
   
     <Script file="core.lua" />
+    <Script file="framefader.lua" />
+    <Script file="dragframe.lua" />
     <Script file="options.lua" />
 
     <Script file="modules\fast_loot.lua" />
+    <Script file="modules\flight_map_paths.lua" />
+    <Script file="modules\macro_shrink.lua" />
     <Script file="modules\map_pins.lua" />
+    <Script file="modules\minimap.lua" />
+    <Script file="modules\objective_tracker.lua" />
+    <Script file="modules\repair.lua" />
+    <Script file="modules\screensaver.lua" />
     <Script file="modules\screenshot_achi.lua" />
     <Script file="modules\sell_poors.lua" />
-    <Script file="modules\vignette.lua" />
+    <Script file="modules\tips.lua" />
     <Script file="modules\uiscale.lua" />
-    <Script file="modules\macro_shrink.lua" />
-    <Script file="modules\repair.lua" />
+    <Script file="modules\vignette.lua" />
 
     <Frame name="aLie">
         <Scripts>

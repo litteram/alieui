@@ -1,26 +1,14 @@
 local A, aLie = ...
 
-local lock = false
-local function setUIScale(self, evt)
-    if lock then return true end
-    if not aLieDB.UIScale then return true end
-
-    if not InCombatLockdown() then
-        local scale = 768/string.match(({GetScreenResolutions()})[GetCurrentResolution()], "%d+x(%d+)")
-        if scale < .64 then
-            UIParent:SetScale(scale)
-        else
-            SetCVar("uiScale", scale)
-        end
-
-        lock = true
-    end
-end
-
 aLie:RegisterModule(
     "UIScale",
     function()
-        aLie:RegisterCallback("VARIABLES_LOADED", setUIScale)
-        aLie:RegisterCallback("UI_SCALE_CHANGED", setUIScale)
+        local Resolution = select(1, GetPhysicalScreenSize()).."x"..select(2, GetPhysicalScreenSize())
+        local PixelPerfectScale = 768 / string.match(Resolution, "%d+x(%d+)")
+        local MinimumScale = 0.64
+        local uiscale = PixelPerfectScale >= MinimumScale and PixelPerfectScale or 0.64
+
+        SetCVar("uiScale", uiscale)
+        SetCVar("useUiScale", 1)
     end
 )

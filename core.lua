@@ -5,6 +5,8 @@ aLie.color = "00FFFFFF"
 aLie.commands = {}
 aLie.commands_help = {}
 aLie.modules = {}
+aLie.modules_loaded = {}
+
 -- Initialization
 function aLie_OnLoad(self)
     self:RegisterEvent("PLAYER_LOGIN")
@@ -16,12 +18,10 @@ function aLie_OnEvent(self, event, ...)
         SetCVar("ScreenshotQuality", 10)
     elseif event == "ADDON_LOADED" then
         -- first load
-        if aLieDB == nil then
-            aLieDB = aLieDBDefaults
-        end
-
         local name = ...
         if name == A then
+            if aLieDB == nil then return end
+
             for mod,enabled in pairs(aLieDB) do
                 if aLie.modules[mod] then
                     aLie.modules[mod]()

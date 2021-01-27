@@ -1,0 +1,41 @@
+
+-- rObjectiveTracker: core
+-- zork, 2016
+
+-----------------------------
+-- Variables
+-----------------------------
+
+local addOn, aLib = ...
+
+-----------------------------
+-- Config
+-----------------------------
+
+local cfg = {
+  scale = 1,
+  point = { "RIGHT", -110, -30 },
+  size = { 260, 500 },
+  fader = {
+    fadeInAlpha = 1,
+    fadeInDuration = 0.3,
+    fadeInSmooth = "OUT",
+    fadeOutAlpha = 0,
+    fadeOutDuration = 0.9,
+    fadeOutSmooth = "OUT",
+    fadeOutDelay = 0,
+  },
+}
+
+-----------------------------
+-- Init
+-----------------------------
+
+--ObjectiveTrackerFrame
+ObjectiveTrackerFrame:SetScale(cfg.scale)
+ObjectiveTrackerFrame:ClearAllPoints()
+ObjectiveTrackerFrame:SetPoint(unpack(cfg.point))
+ObjectiveTrackerFrame:SetSize(unpack(cfg.size))
+
+--frame fader
+aLib:CreateFrameFader(ObjectiveTrackerFrame, cfg.fader)

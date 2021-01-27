@@ -1,6 +1,6 @@
 local A, aLie = ...
 
-if aLieDB.CombatText then
+local function combatTextSetup()
     local size = 10
 
     CombatTextFont:SetFont(STANDARD_TEXT_FONT, size, "OUTLINE")
@@ -17,3 +17,5 @@ if aLieDB.CombatText then
     COMBAT_TEXT_SCROLLSPEED = 2.5
     COMBAT_TEXT_Y_SCALE = 1.1
 end
+
+aLie:RegisterModule("CombatText", combatTextSetup)
