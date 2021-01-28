@@ -2,6 +2,15 @@
 ## Author: aLie
 ## Title: a|cffCC3333Lie|r
 ## Notes: a|cffCC3333Lie|r Tweaks and small functions
+## Version: 0.0.1
 ## SavedVariables: aLieDB
+## OptionalDeps: Ace3
 
-alie.xml
+Libs\embeds.xml
+
+core.lua
+framefader.lua
+dragframe.lua
+options.lua
+
+modules.xml

@@ -51,9 +51,9 @@ local function onMerchant()
     if(CanMerchantRepair()) then
         local m = GetMoney()
         local r = GetRepairAllCost()
-        local gbr = aLieDB['GuildbankRepair'] and CanGuildBankRepair()
+        local gbr = aLieDB.GuildbankRepair and CanGuildBankRepair()
 
-        if(r > 0 and (m > r or gbr) and db['autorepair']) then
+        if(r > 0 and (m > r or gbr)) then
             local money = format_money(r)
             if(gbr) then
                 if(getGBLimit() >= r) then
@@ -69,7 +69,7 @@ local function onMerchant()
                 end
             else
                 RepairAllItems()
-                addon:Print('Repair costs: '.. money)
+                aLie:l('Repair costs: '.. money)
             end
         end
     end

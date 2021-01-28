@@ -20,14 +20,15 @@ local cvars = {
     enableFloatingCombatText = 0, -- legion
     Outline = 2,
     ShowQuestUnitCircles = 0, -- legion, find the category
-    findYourselfMode = -1, -- legion
+    findYourselfAnywhereOnlyInCombat = 1,
+    findYourselfMode = 2, -- legion
     chatBubbles = 1,
     chatBubblesParty = 0,
 
     -- Social
     profanityFilter = 0,
     spamFilter = 0,
-    guildMemberNotify = 1,
+    guildMemberNotify = 0,
     blockTrades = 0,
     blockChannelInvites = 0,
     showToastOnline = 0,
@@ -37,7 +38,7 @@ local cvars = {
     showToastWindow = 0,
     enableTwitter = 0,
     showTimestamps = 'none',
-    whisperMode = 'inline',
+    whisperMode = 'popout_and_inline',
 
     -- ActionBars
     lockActionBars = 1,
@@ -65,7 +66,9 @@ local cvars = {
     nameplateShowSelf = 0,
     NamePlateHorizontalScale = 1,
     NamePlateVerticalScale = 1,
-    nameplateMotion = 1,
+    nameplateMotion = 2,
+    nameplateOverlapH = 0.6,
+    nameplateOverlapV = 0.8,
 
     -- Camera
     cameraWaterCollision = 0,
@@ -138,4 +141,4 @@ local function applyConfig()
     end)
 end
 
-aLie:CreateSlashCmd()
+aLie:RegisterModule("CVars", applyConfig)
