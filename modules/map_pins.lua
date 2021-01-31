@@ -1,4 +1,4 @@
-local A, aLie = ...
+local A, ns = ...
 
 local function initMapPinsTrack()
     local function onUserWaypointUpdated()
@@ -8,9 +8,9 @@ local function initMapPinsTrack()
             end);
         end
     end
-    aLie:RegisterCallback("USER_WAYPOINT_UPDATED", onUserWaypointUpdated)
+    ns.L:RegisterCallback("USER_WAYPOINT_UPDATED", onUserWaypointUpdated)
 end
-aLie:RegisterModule("MapPinsTrack", initMapPinsTrack)
+ns.L:RegisterModule("MapPinsTrack", initMapPinsTrack)
 
 local function initMapPinsAlpha()
     if not aLieDB.MapPinsAlpha then return end
@@ -23,7 +23,7 @@ local function initMapPinsAlpha()
         end
     end
 end
-aLie:RegisterModule("MapPinsAlpha", initMapPinsAlpha)
+ns.L:RegisterModule("MapPinsAlpha", initMapPinsAlpha)
 
 local function findZone(z,s)
     for i=0,2000 do
@@ -95,7 +95,7 @@ end
 
 
 SLASH_UMPD1 = "/uway";
-SLASH_UMPD1 = "/pin";
+SLASH_UMPD2 = "/pin";
 SlashCmdList["UMPD"] = slashMapPinCmd
 
 -- TomTom-like function
@@ -112,4 +112,4 @@ local function initTomTom()
 
     SLASH_UMPD3 = "/way";
 end
-aLie:RegisterModule("MapPinsTomTom", initTomTom)
+ns.L:RegisterModule("MapPinsTomTom", initTomTom)

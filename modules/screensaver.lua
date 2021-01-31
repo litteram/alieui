@@ -9,7 +9,6 @@
 local addonName, ns = ...
 local A = addonName .. "Screensaver"
 
-
 -----------------------------
 -- Init
 -----------------------------
@@ -40,6 +39,7 @@ end
 
 --onevent handler
 function f:OnEvent(event)
+    if not ns.L.db.global.screensaver then return end
     if event == "PLAYER_LOGIN" then
         self.model:SetUnit("player")
         self.model:SetRotation(math.rad(-110))

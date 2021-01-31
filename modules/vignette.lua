@@ -1,4 +1,4 @@
-local A, aLie = ...
+local A, ns = ...
 
 -- Forked from rVignette by zork - 2014
 
@@ -27,9 +27,9 @@ local function onVignetteAlert(self, evt, id)
     end
 end
 
-aLie:RegisterModule(
+ns.L:RegisterModule(
     "VignetteAlert",
     function()
-        aLie:RegisterCallback("VIGNETTE_MINIMAP_UPDATED", onVignetteAlert)
+        ns.L:RegisterCallback("VIGNETTE_MINIMAP_UPDATED", onVignetteAlert)
     end
 )

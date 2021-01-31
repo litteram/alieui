@@ -1,4 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+    <Script file="modules\combat_text.lua" />
     <Script file="modules\fast_loot.lua" />
     <Script file="modules\flight_map_paths.lua" />
     <Script file="modules\macro_shrink.lua" />
@@ -12,12 +13,5 @@
     <Script file="modules\tips.lua" />
     <Script file="modules\uiscale.lua" />
     <Script file="modules\vignette.lua" />
-
-    <Frame name="aLie">
-        <Scripts>
-            <OnLoad function="aLie_OnLoad" />
-            <OnEvent function="aLie_OnEvent" />
-        </Scripts>
-    </Frame>
 </Ui>
 

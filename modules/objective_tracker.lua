@@ -6,7 +6,7 @@
 -- Variables
 -----------------------------
 
-local addOn, aLib = ...
+local addOn, ns = ...
 
 -----------------------------
 -- Config
@@ -38,4 +38,4 @@ ObjectiveTrackerFrame:SetPoint(unpack(cfg.point))
 ObjectiveTrackerFrame:SetSize(unpack(cfg.size))
 
 --frame fader
-aLib:CreateFrameFader(ObjectiveTrackerFrame, cfg.fader)
+ns:CreateFrameFader(ObjectiveTrackerFrame, cfg.fader)

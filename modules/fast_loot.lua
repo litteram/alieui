@@ -1,4 +1,4 @@
-local A, aLie = ...
+local A, ns = ...
 
 local GetCVarBool = _G.GetCVarBool
 local GetNumLootItems = _G.GetNumLootItems
@@ -22,9 +22,8 @@ local function fastLoot()
     end
 end
 
-aLie:RegisterModule(
-    "FastLoot",
-    function()
-        aLie:RegisterCallback("LOOT_READY", fastLoot)
-    end
-)
+local function setup()
+    ns.L:RegisterCallback("LOOT_READY", fastLoot)
+end
+
+ns.L:RegisterModule("fastLoot", setup)

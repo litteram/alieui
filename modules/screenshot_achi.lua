@@ -1,4 +1,4 @@
-local _, aLie = ...
+local _, ns = ...
 
 local function ScreenshotAchi()
     if aLieDB.ScreenshotAchi then
@@ -6,9 +6,8 @@ local function ScreenshotAchi()
     end
 end
 
-aLie:RegisterModule(
-    "ScreenshotAchi",
-    function()
-        aLie:RegisterCallback("ACHIEVEMENT_EARNED", ScreenshotAchi)
-    end
-)
+local function setup()
+    ns.L:RegisterCallback("ACHIEVEMENT_EARNED", ScreenshotAchi)
+end
+
+ns.L:RegisterModule("screenshotAchi", setup)

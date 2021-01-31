@@ -1,4 +1,4 @@
-local A, aLie = ...
+local A, ns = ...
 
 local function addonLoaded(evt)
     if not aLieDB.FlightPaths then return end
@@ -30,4 +30,4 @@ local function addonLoaded(evt)
     end)
 end
 
-aLie:RegisterModule("FlightMapPaths", addonLoaded)
+ns.L:RegisterModule("FlightMapPaths", addonLoaded)

@@ -1,4 +1,4 @@
-local A, aLie = ...
+local A, ns = ...
 
 local function combatTextSetup()
     local size = 10
@@ -18,4 +18,4 @@ local function combatTextSetup()
     COMBAT_TEXT_Y_SCALE = 1.1
 end
 
-aLie:RegisterModule("CombatText", combatTextSetup)
+ns.L:RegisterModule("combatTextTweaks", combatTextSetup)

@@ -1,4 +1,4 @@
-local A, L = ...
+local A, ns = ...
 
 -- list of all settings listed in the interface options
 local cvars = {
@@ -124,10 +124,13 @@ local uvars = {
 
     nameplateOtherTopInset = -1,
     nameplateOtherBottomInset = -1,
+
+    -- spell queue, roughly 150 + lag
+    SpellQueueWindow = 200,
 }
 
 local function applyConfig()
-    table.insert(ns.settings.cvars, function()
+    table.insert(ns.cvars, function()
                      for key, value in next, cvars do
                          SetCVar(key, value)
                      end
@@ -141,4 +144,4 @@ local function applyConfig()
     end)
 end
 
-aLie:RegisterModule("CVars", applyConfig)
+ns.L:RegisterModule("cvars", applyConfig)

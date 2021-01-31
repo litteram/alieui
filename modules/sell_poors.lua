@@ -6,7 +6,7 @@
 -- Variables
 -----------------------------
 
-local A, aLie = ...
+local A, ns = ...
 
 
 -----------------------------
@@ -45,10 +45,10 @@ local function onEvent(self,event)
     end
 end
 
-aLie:RegisterModule(
+ns.L:RegisterModule(
     "SellPoors",
     function()
-        aLie:RegisterCallback("MERCHANT_SHOW", onEvent)
-        aLie:RegisterCallback("MERCHANT_CLOSED", onEvent)
+        ns.L:RegisterCallback("MERCHANT_SHOW", onEvent)
+        ns.L:RegisterCallback("MERCHANT_CLOSED", onEvent)
     end
 )

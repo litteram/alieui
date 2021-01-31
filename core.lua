@@ -1,52 +1,181 @@
-local A, aLie = ...
+local A, ns = ...
+ns.L = LibStub("AceAddon-3.0"):NewAddon("aLie", "AceEvent-3.0")
+local L = ns.L
 
-aLie.addonName = A
-aLie.color = "00FFFFFF"
-aLie.commands = {}
-aLie.commands_help = {}
-aLie.modules = {}
-aLie.modules_loaded = {}
-
--- Initialization
-function aLie_OnLoad(self)
-    self:RegisterEvent("PLAYER_LOGIN")
-    self:RegisterEvent("ADDON_LOADED")
+function L.optget(info, value)
+    return L.db.global[info[#info]]
 end
 
-function aLie_OnEvent(self, event, ...)
-    if event == "PLAYER_LOGIN" then
-        SetCVar("ScreenshotQuality", 10)
-    elseif event == "ADDON_LOADED" then
-        -- first load
-        local name = ...
-        if name == A then
-            if aLieDB == nil then return end
-
-            for mod,enabled in pairs(aLieDB) do
-                if aLie.modules[mod] then
-                    aLie.modules[mod]()
-                end
-            end
-        end
-    end
+function L.optset(info, value)
+    L.db.global[info[#info]] = value
+    L:debug("The " .. info[#info] .. " was set to: " .. tostring(value) )
 end
 
-function aLie:CopyTable(orig)
+function L.copyTable(orig)
     local orig_type = type(orig)
     local copy
     if orig_type == 'table' then
         copy = {}
         for orig_key, orig_value in next, orig, nil do
-            copy[aLie:CopyTable(orig_key)] = aLie:CopyTable(orig_value)
+            copy[L.copyTable(orig_key)] = L.copyTable(orig_value)
         end
-        setmetatable(copy, aLie:CopyTable(getmetatable(orig)))
+        setmetatable(copy, L.copyTable(getmetatable(orig)))
     else -- number, string, boolean, etc
         copy = orig
     end
     return copy
 end
 
-function aLie:RegisterCallback(event, callback, ...)
+local options = {
+    type = "group",
+    inline = true,
+    args = {
+        advGameTweask = {
+            type = "group",
+            name = "Advanced tweaks",
+            inline = true,
+            args = {
+                _ = {
+                    name = 'Warning, this options will require a manual /reload \n',
+                    type = 'description',
+                    order = 0,
+                },
+                cvars = {
+                    name = "cVars",
+                    desc = "Enable the cVars module",
+                    type = "toggle",
+                },
+                autoUiScale = {
+                    name = "AutomaticUIScale",
+                    desc = "Automatically select a pixel-perfect UI Scale",
+                    type = "toggle",
+                },
+            },
+        },
+        gameTweaks = {
+            type = "group",
+            inline = true,
+            name = "Game Tweaks",
+            args = {
+                fastLoot = {
+                    name = "Fast Autoloot",
+                    desc = "Incredibly fast autoloot",
+                    type = "toggle",
+                },
+                vignetteAlerts = {
+                    name = "Vignette Alerts",
+                    desc = "Alerts when you detect a rare npc, chest or item",
+                    type = "toggle",
+                },
+                screenSaver = {
+                    name = "Screensaver",
+                    desc = "Use an AFK screensaver, it's cool",
+                    type = "toggle",
+                },
+                screenshotAchi = {
+                    name = "Screenshot Achivements",
+                    desc = "Automatically Screenshot achievements moments",
+                    type = "toggle",
+                },
+                combatTextTweaks = {
+                    name = "CombatTextTweaks",
+                    desc = "Combat Text tweaks",
+                    type = "toggle",
+                },
+            }
+        },
+        merchant = {
+            name = "Merchant Tweaks",
+            type = "group",
+            inline = true,
+            args = {
+                altbuy = {
+                    name = "AltBuy",
+                    desc = "Buy a full stack with Alt",
+                    type = "toggle",
+                },
+                sellPoors = {
+                    name = "SellPoor",
+                    desc = "Sell gray items while visiting a vendor",
+                    type = "toggle",
+                },
+                repair = {
+                    name = "AutoRepair",
+                    desc = "Automatically repair gear when visiting an able smith.",
+                    type = "toggle",
+                },
+                repairGuild = {
+                    name = "Auto RepairGuild",
+                    desc = "Automatically repair gear using guild funds when visiting an able smith.",
+                    type = "toggle",
+                },
+            },
+        },
+        mapPinsThings = {
+            name = "MapPins",
+            type = "group",
+            inline = true,
+            args = {
+                MapPinsTrack = {
+                    name = "Track",
+                    desc = "Automatically track Map Pins when created",
+                    type = "toggle",
+                },
+                MapPinsAlpha = {
+                    name = "Always Show",
+                    desc = "Always show MapPins even when very far away",
+                    type = "toggle"
+                },
+                MapPinsTomTom = {
+                    name = "TomTom Integration",
+                    desc = "TomTom integration, use MapPins when TomTom is not loaded",
+                    type = "toggle"
+                },
+            },
+        },
+        reloadBtn = {
+            type = "execute",
+            name = "Reload UI",
+            order = -1,
+            func = function() ReloadUI() end
+        },
+    },
+    get = L.optget,
+    set = L.optset,
+}
+
+function L:OnInitialize()
+    self.db = LibStub("AceDB-3.0"):New("aLieDB")
+
+    LibStub("AceConfig-3.0"):RegisterOptionsTable(A, options, {"alie"})
+    self.options = LibStub("AceConfigDialog-3.0"):AddToBlizOptions(A, "aLie Tweaks");
+
+    for n,f in pairs(self.modules) do
+        if self.db.global[n] and self.modules[n] then
+            self.debug("enabling " .. n)
+            self.modules[n]()
+        end
+    end
+end
+
+function L:OnEnable()
+end
+
+function L:OnDisable()
+end
+
+function L.debug(...)
+    if not L.db.profile.debug then return nil end
+    print(...)
+end
+
+SLASH_ALIE_DBG1 = "/aliedebug"
+SlashCmdList["ALIE_DBG"] = function()
+    L.db.profile.debug = not L.db.profile.debug
+    L.debug("enabled")
+end
+
+function L:RegisterCallback(event, callback, ...)
     if callback == nil then aLie:l("callback for "..event.." is nil!") end
     if not self.eventFrame then
         self.eventFrame = CreateFrame("Frame")
@@ -64,77 +193,15 @@ function aLie:RegisterCallback(event, callback, ...)
     self.eventFrame:RegisterEvent(event)
 end
 
-function aLie:RegisterModule(name, initfn)
+function L:RegisterModule(name, initfn)
     self.modules[name] = initfn
 end
 
-function aLie:CallElementFunction(element, func, ...)
+function L:CallElementFunction(element, func, ...)
     if element and func and element[func] then
         element[func](element, ...)
     end
 end
 
-
-function aLie:l(msg, color)
-    print("|c"..(color or aLie.color).."|r "..msg)
-end
-
-function aLie:CreateSlashCmd(shortcut, fn, help)
-    if not addonName or not shortcut or not frames then return end
-    SlashCmdList[shortcut] = fn
-    _G["SLASH_"..shortcut.."1"] = "/"..shortcut
-    aLie:l(addonName, "|c"..(color or aLie.color).."/"..shortcut.."|r "..(help or "command registered"))
-end
-
-function aLie:addSlashCommand(shortcut, fn, help)
-    aLie.commands[shortcut] = fn
-    aLie.commands_help[shortcut] = (_G["SLASH_ALIE1"] .. " " .. shortcut .. " [options] " .. (help or ""))
-end
-
-local function OnSlashCommand(msg)
-    local cmd = {}
-    for i in string.gmatch(string.lower(msg or ""), "%S+") do
-        table.insert(cmd, i)
-    end
-
-    if #cmd < 1 or cmd[1] == "help" or cmd[1] == "h" or not aLie.commands[cmd[1]] then
-        print "Helpy paris"
-        for _, i in ipairs(aLie.commands_help) do
-            print(i)
-        end
-        return print("")
-    else
-        aLie.commands[cmd[1]](cmd)
-    end
-end
-
-SlashCmdList["ALIE"] = OnSlashCommand
-SLASH_ALIE1 = "/alie"
-
--- ???
-SlashCmdList["ACTIONCAM"] = function(msg)
-    if msg == "basic" or msg == "full" or msg == "off" then
-        ConsoleExec("actioncam "..msg)
-    else
-        print("ActionCam Options: basic, full, off")
-    end
-end
-SLASH_ACTIONCAM1 = "/actioncam"
-
-aLie:addSlashCommand(
-    "reset",
-    function()
-        aLieDB = aLie:CopyTable(aLieDBDefaults)
-        print("aLie database reset to default")
-    end,
-    "reset options to default")
-
-aLie:addSlashCommand(
-    "db",
-    function()
-        for k,v in pairs(aLieDB) do
-            print(A.."."..k..": "..tostring(v))
-        end
-    end,
-    "Show aLie database"
-)
+SLASH_ALIE_RL1 = "/rl";
+SlashCmdList["ALIE_RL"] = function() ReloadUI() end

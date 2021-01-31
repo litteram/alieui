@@ -1,4 +1,4 @@
-local A, aLib = ...
+local A, ns = ...
 
 local mediapath = "Interface\\AddOns\\".. A .."\\media\\"
 
@@ -140,7 +140,7 @@ local function SetTimer()
     C_Timer.After(1.5, Hide)
 end
 Minimap:SetScript("OnLeave", SetTimer)
-aLib:RegisterCallback("PLAYER_ENTERING_WORLD", Hide)
+ns.L:RegisterCallback("PLAYER_ENTERING_WORLD", Hide)
 Hide(Minimap)
 
 local function beautify()
@@ -148,4 +148,4 @@ local function beautify()
 local object = CreateFrame("Frame")
     Minimap:CreateBeautyBorder(10)
 end
-aLib:RegisterCallback("PLAYER_ENTERING_WORLD", beautify)
+ns.L:RegisterCallback("PLAYER_ENTERING_WORLD", beautify)

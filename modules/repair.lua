@@ -1,4 +1,5 @@
-local _, aLie = ...
+local _, ns = ...
+local db = {}
 
 local function getGBLimit()
     local amount = GetGuildBankWithdrawMoney()
@@ -46,12 +47,12 @@ local function format_money(money)
 end
 
 local function onMerchant()
-    if not aLieDB.Repair then return end
+    if not db.repair then return end
 
     if(CanMerchantRepair()) then
         local m = GetMoney()
         local r = GetRepairAllCost()
-        local gbr = aLieDB.GuildbankRepair and CanGuildBankRepair()
+        local gbr = db.repairGuild and CanGuildBankRepair()
 
         if(r > 0 and (m > r or gbr)) then
             local money = format_money(r)
@@ -62,22 +63,22 @@ local function onMerchant()
                 else
                     if(m > r) then
                         RepairAllItems()
-                        aLie:l('repaircost' .. money)
+                        ns.l('repaircost' .. money)
                     else
-                        aLie:l("c|ff0000 Guild allowance is not enough|r")
+                        ns.l("c|ff0000 Guild allowance is not enough|r")
                     end
                 end
             else
                 RepairAllItems()
-                aLie:l('Repair costs: '.. money)
+                ns.l('Repair costs: '.. money)
             end
         end
     end
 end
 
-aLie:RegisterModule(
-    "Repair",
-    function()
-        aLie:RegisterCallback("MERCHANT_SHOW", onMerchant)
-    end
-)
+local function setup()
+    db = ns.L.db.global -- keep a ref to the db
+    ns.L:RegisterCallback("MERCHANT_SHOW", onMerchant)
+end
+
+ns.L:RegisterModule("repair", setup)

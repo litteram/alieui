@@ -1,7 +1,7 @@
-local A, aLie = ...
+local A, ns = ...
 
-aLie:RegisterModule(
-    "UIScale",
+ns.L:RegisterModule(
+    "autoUIScale",
     function()
         local Resolution = select(1, GetPhysicalScreenSize()).."x"..select(2, GetPhysicalScreenSize())
         local PixelPerfectScale = 768 / string.match(Resolution, "%d+x(%d+)")

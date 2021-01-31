@@ -11,6 +11,5 @@ Libs\embeds.xml
 core.lua
 framefader.lua
 dragframe.lua
-options.lua
 
 modules.xml
