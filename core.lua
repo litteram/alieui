@@ -42,6 +42,7 @@ local defaults = {
         MapPinsTrack = true,
         MapPisAlpha = true,
         MapPinsTomTom = true,
+        errorsFilter = true,
     },
 }
 
@@ -67,6 +68,11 @@ local options = {
                 autoUiScale = {
                     name = "AutomaticUIScale",
                     desc = "Automatically select a pixel-perfect UI Scale",
+                    type = "toggle",
+                },
+                errorsFilter = {
+                    name = "Errors Filter",
+                    desc = "Filter useless UI errors (eg. Ability is not ready)",
                     type = "toggle",
                 },
             },
