@@ -63,14 +63,14 @@ local function onMerchant()
                 else
                     if(m > r) then
                         RepairAllItems()
-                        ns.l('repaircost' .. money)
+                        ns.L:Print('repaircost' .. money)
                     else
-                        ns.l("c|ff0000 Guild allowance is not enough|r")
+                        ns.L:Print("c|ff0000 Guild allowance is not enough|r")
                     end
                 end
             else
                 RepairAllItems()
-                ns.l('Repair costs: '.. money)
+                ns.L:Print('Repair costs: '.. money)
             end
         end
     end

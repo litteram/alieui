@@ -1,5 +1,5 @@
 local A, ns = ...
-ns.L = LibStub("AceAddon-3.0"):NewAddon("aLie", "AceEvent-3.0")
+ns.L = LibStub("AceAddon-3.0"):NewAddon("aLie", "AceEvent-3.0", "AceConsole-3.0")
 local L = ns.L
 
 function L.optget(info, value)
@@ -25,6 +25,25 @@ function L.copyTable(orig)
     end
     return copy
 end
+
+local defaults = {
+    global = {
+        cvars = false,
+        autoUiScale = true,
+        fastLoot = true,
+        vignetteAlerts = true,
+        screenSaver = true,
+        screenshotAchi = true,
+        combatTextTweaks = true,
+        altbuy = true,
+        sellPoors = true,
+        repair = true,
+        repairGuild = false,
+        MapPinsTrack = true,
+        MapPisAlpha = true,
+        MapPinsTomTom = true,
+    },
+}
 
 local options = {
     type = "group",
@@ -145,7 +164,7 @@ local options = {
 }
 
 function L:OnInitialize()
-    self.db = LibStub("AceDB-3.0"):New("aLieDB")
+    self.db = LibStub("AceDB-3.0"):New("aLieDB", defaults, true)
 
     LibStub("AceConfig-3.0"):RegisterOptionsTable(A, options, {"alie"})
     self.options = LibStub("AceConfigDialog-3.0"):AddToBlizOptions(A, "aLie Tweaks");

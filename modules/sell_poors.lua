@@ -46,7 +46,7 @@ local function onEvent(self,event)
 end
 
 ns.L:RegisterModule(
-    "SellPoors",
+    "sellPoors",
     function()
         ns.L:RegisterCallback("MERCHANT_SHOW", onEvent)
         ns.L:RegisterCallback("MERCHANT_CLOSED", onEvent)
