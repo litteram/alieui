@@ -43,6 +43,14 @@ local defaults = {
         MapPisAlpha = true,
         MapPinsTomTom = true,
         errorsFilter = true,
+        moveDefaultUF = true,
+
+        -- more settings
+        moveDefaultUFSettings = {
+            player = {-160, -300},
+            target = {160, -300},
+            focus  = {400, -300},
+        }
     },
 }
 
@@ -50,7 +58,12 @@ local options = {
     type = "group",
     inline = true,
     args = {
-        advGameTweask = {
+        _ = {
+            name = 'A simple set of lightweight tweaks',
+            type = 'description',
+            order = 0,
+        },
+        advGameTweaks = {
             type = "group",
             name = "Advanced tweaks",
             inline = true,
@@ -73,6 +86,11 @@ local options = {
                 errorsFilter = {
                     name = "Errors Filter",
                     desc = "Filter useless UI errors (eg. Ability is not ready)",
+                    type = "toggle",
+                },
+                moveDefaultUF = {
+                    name = "Move Unit Frames",
+                    desc = "Move default Unit Frames in the center of the screen",
                     type = "toggle",
                 },
             },

@@ -1,4 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+    <Script file="modules\align.lua" />
+    <Script file="modules\alt_buy.lua" />
     <Script file="modules\combat_text.lua" />
     <Script file="modules\errors_filter.lua" />
     <Script file="modules\fast_loot.lua" />
@@ -6,6 +8,7 @@
     <Script file="modules\macro_shrink.lua" />
     <Script file="modules\map_pins.lua" />
     <Script file="modules\minimap.lua" />
+    <Script file="modules\move_default_uf.lua" />
     <Script file="modules\objective_tracker.lua" />
     <Script file="modules\repair.lua" />
     <Script file="modules\screensaver.lua" />
@@ -14,5 +17,6 @@
     <Script file="modules\tips.lua" />
     <Script file="modules\uiscale.lua" />
     <Script file="modules\vignette.lua" />
+    <Script file="modules\chat.lua" />
 </Ui>
 
