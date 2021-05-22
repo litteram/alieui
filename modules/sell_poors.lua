@@ -26,7 +26,7 @@ local function sellGray()
                 --print(A,"selling",link,"bag",bag,"slot",slot)
                 list["b"..bag.."s"..slot] = true
                 UseContainerItem(bag, slot)
-                C_Timer.After(0.2, sellGray)
+                C_Timer.After(0.1, sellGray)
                 return
             end
         end
@@ -34,7 +34,7 @@ local function sellGray()
 end
 
 local function onEvent(self,event)
-    if not aLieDB.SellPoors then return end
+    if not ns.L.db.global.sellPoors then return end
 
     if event == "MERCHANT_SHOW" then
         stop = false
@@ -45,10 +45,9 @@ local function onEvent(self,event)
     end
 end
 
-ns.L:RegisterModule(
-    "sellPoors",
-    function()
-        ns.L:RegisterCallback("MERCHANT_SHOW", onEvent)
-        ns.L:RegisterCallback("MERCHANT_CLOSED", onEvent)
-    end
-)
+local function setup()
+    ns.L:RegisterCallback("MERCHANT_SHOW", onEvent)
+    ns.L:RegisterCallback("MERCHANT_CLOSED", onEvent)
+end
+
+ns.L:RegisterModule("sellPoors", setup)

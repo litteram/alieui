@@ -8,6 +8,8 @@
 
 Libs\embeds.xml
 
+media.lua
+
 core.lua
 framefader.lua
 dragframe.lua

@@ -13,7 +13,7 @@ end
 ns.L:RegisterModule("MapPinsTrack", initMapPinsTrack)
 
 local function initMapPinsAlpha()
-    if not aLieDB.MapPinsAlpha then return end
+    if not ns.L.db.global.MapPinsAlpha then return end
     local dAlpha = SuperTrackedFrame.GetTargetAlphaBaseValue;
     function SuperTrackedFrame:GetTargetAlphaBaseValue()
         if dAlpha(self) == 0 and C_Navigation.GetDistance() >= 999 then
@@ -43,53 +43,30 @@ local function findZone(z,s)
     return 0
 end
 
+local wrongseparator = "(%d)" .. (tonumber("1.1") and "," or ".") .. "(%d)"
+local rightseparator =   "%1" .. (tonumber("1.1") and "." or ",") .. "%2"
+
 local function slashMapPinCmd(msg)
-    local zoneFound = 0
     msg = msg and string.lower(msg)
-
-    local wrongseparator = "(%d)" .. (tonumber("1.1") and "," or ".") .. "(%d)"
-    local rightseparator =   "%1" .. (tonumber("1.1") and "." or ",") .. "%2"
-
-    local tokens = {}
     msg = msg:gsub("(%d)[%.,] (%d)", "%1 %2"):gsub(wrongseparator, rightseparator)
-    for token in msg:gmatch("%S+") do
-        table.insert(tokens, token)
-    end
 
-    for i = 1, #tokens do
-        local token = tokens[i]
-        if tonumber(token) then
-            zoneFound = i - 1
-            break
-        end
-    end
+    local mapId, x, y = string.match(msg,
+            "\#?([%d]*)%s*([%d]+[\.\,][%d]+)%s+([%d]+[\.\,][%d]+)")
+    output(zone, x, y)
 
-    local c = {}
-    local p="player" 
-    local u=C_Map.GetBestMapForUnit(p) 
-    local m=C_Map.GetPlayerMapPosition(u,p)
+    local playerMap = C_Map.GetBestMapForUnit("player") 
+    local playerPos = C_Map.GetPlayerMapPosition(playerMap, "player")
 
-    c.z, c.x, c.y = table.concat(tokens, " ", 1, zoneFound), select(zoneFound + 1, unpack(tokens))
+    -- local point = UiMapPoint.CreateFromCoordinates(playerMap, tonumber(x)/100, tonumber(y)/100);
 
-    if c.x and c.y then
-        if c.z and string.len(c.z) > 1 then
-            c.s = string.match(c.z, ":([a-z%s'`]+)");
-            c.z = string.match(c.z, "([a-z%s'`]+)");
-            c.z = string.gsub(c.z, '[ \t]+%f[\r\n%z]', '')
+    if C_Map.CanSetUserWaypointOnMap(mapId) then
+        -- local pos = C_Map.GetPlayerMapPosition(mapID, "player")
+        local mapPoint = UiMapPoint.CreateFromVector2D(mapID, {x=x, y=y})
+        C_Map.SetUserWaypoint(mapPoint)
 
-            local sub = 0
-            if c.s and string.len(c.s) > 0 then
-                c.s = string.gsub(c.s, '[ \t]+%f[\r\n%z]', '')
-                sub = findZone(c.s,0)
-            end
-            local zone = findZone(c.z,sub)
-            if zone ~= 0 then
-                u = zone
-            end
-        end
-
-        C_Map.SetUserWaypoint(UiMapPoint.CreateFromCoordinates(u,tonumber(c.x)/100,tonumber(c.y)/100));
         C_SuperTrack.SetSuperTrackedUserWaypoint(true);
+    else
+        print("Cannot set waypoints on this map")
     end
 end
 

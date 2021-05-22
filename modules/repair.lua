@@ -27,20 +27,20 @@ local function format_money(money)
 
     if(money > 0) then
         if(g>0) then
-            moneystring = format("%s%s",g,goldicon)
+            moneystring = moneystring..format("%s%s",g,goldicon)
         end
         if(s>0) then
-            moneystring = format("%s%s",s,silvericon)
+            moneystring = moneystring..format("%s%s",s,silvericon)
         end
         if(c>0) then
-            moneystring = format("%s%s",c,coppericon)
+            moneystring = moneystring..format("%s%s",c,coppericon)
         end
     else
-        moneystring = format("%s%s",'0',coppericon)
+        moneystring = moneystring..format("%s%s",'0',coppericon)
     end
 
     if(money < 0) then
-        moneystring = format("-%s",moneystring)
+        moneystring = moneystring..format("-%s",moneystring)
     end
 
     return moneystring

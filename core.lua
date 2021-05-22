@@ -31,6 +31,7 @@ local defaults = {
         cvars = false,
         autoUiScale = true,
         fastLoot = true,
+        objectiveTracker = true,
         vignetteAlerts = true,
         screenSaver = true,
         screenshotAchi = true,
@@ -44,6 +45,9 @@ local defaults = {
         MapPinsTomTom = true,
         errorsFilter = true,
         moveDefaultUF = true,
+        minimapTweaks = true,
+        tooltips = true,
+        autorelease = true,
 
         -- more settings
         moveDefaultUFSettings = {
@@ -121,8 +125,23 @@ local options = {
                     type = "toggle",
                 },
                 combatTextTweaks = {
-                    name = "CombatTextTweaks",
-                    desc = "Combat Text tweaks",
+                    name = "CombatText Tweaks",
+                    desc = "Tweaks for size and shadow of the default Combat Text",
+                    type = "toggle",
+                },
+                objectiveTracker = {
+                    name = "Immersive Objective Tracker",
+                    desc = "Fade-out the Quest Objective Tracker, will fade back in on mouse-over",
+                    type = "toggle",
+                },
+                minimapTweaks = {
+                    name = "Minimap Tweaks",
+                    desc = "Tweaks to the size, shape and skin of the minimap, a complete overhaul",
+                    type = "toggle",
+                },
+                tootips = {
+                    name = "Skin Tooltips",
+                    desc = "Skin tooltips to be more informative",
                     type = "toggle",
                 },
             }
@@ -176,6 +195,18 @@ local options = {
                 },
             },
         },
+        qol = {
+            name = "QualityOfLife",
+            type = "group",
+            inline = true,
+            args = {
+                autorelease = {
+                    name = "Auto Release in BGs",
+                    desc = "Automatilcally release in battlegrounds unless soulstoned",
+                    type = "toggle",
+                },
+            },
+        },
         reloadBtn = {
             type = "execute",
             name = "Reload UI",
@@ -218,8 +249,17 @@ SlashCmdList["ALIE_DBG"] = function()
     L.debug("enabled")
 end
 
+SLASH_ALIE_DUMP1 = "/aliedump"
+SlashCmdList["ALIE_DUMP"] = function()
+    print("db dump:")
+    for k,v in ipairs(aLieDB.global) do
+        print(tostring(k) .. ": " .. tostring(v))
+    end
+    print("--")
+end
+
 function L:RegisterCallback(event, callback, ...)
-    if callback == nil then aLie:l("callback for "..event.." is nil!") end
+    if callback == nil then print("callback for "..event.." is nil!") end
     if not self.eventFrame then
         self.eventFrame = CreateFrame("Frame")
         function self.eventFrame:OnEvent(event, ...)
