@@ -1,0 +1,12 @@
+## Interface: 100000
+## Title: alieui
+## Version: 10.0-001
+## Notes: trinkets and baubles
+## Author: alie
+libs/libs.xml
+
+core.lua
+modules/macros.lua
+modules/map_pins.lua
+modules/sell_poor.lua
+modules/fast_loot.lua

@@ -8,6 +8,7 @@ local LootSlot = _G.LootSlot
 
 local DEBOUNCE_INTERVAL = 0.3
 
+
 local delay = 0
 local LootFrame_OnEvent_default = LootFrame:GetScript("OnEvent")
 
@@ -24,17 +25,12 @@ end
 function LootFrame_OnEvent_modified(...)
     local _, event = ...
 
-    if event == "LOOT_READY" and ns.L.db.global.fastLoot and GetCVarBool("autoLootDefault") ~= IsModifiedClick("AUTOLOOTTOGGLE") then
+    if event == "LOOT_READY" and GetCVarBool("autoLootDefault") ~= IsModifiedClick("AUTOLOOTTOGGLE") then
         fastLoot()
     else
         LootFrame_OnEvent_default(...)
+
     end
 end
 
-
-
-local function setup()
-    LootFrame:SetScript("OnEvent", LootFrame_OnEvent_modified)
-end
-
-ns.L:RegisterModule("fastLoot", setup)
+LootFrame:SetScript("OnEvent", LootFrame_OnEvent_modified)

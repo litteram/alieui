@@ -1,4 +1,3 @@
-
 -- rSellPoor: core
 -- zork, 2018
 
@@ -21,6 +20,7 @@ local function sellGray()
     for bag=0,4 do
         for slot=0,GetContainerNumSlots(bag) do
             if stop then return end
+
             local link = GetContainerItemLink(bag, slot)
             if link and select(3, GetItemInfo(link)) == 0 and not list["b"..bag.."s"..slot] then
                 --print(A,"selling",link,"bag",bag,"slot",slot)
@@ -45,9 +45,5 @@ local function onEvent(self,event)
     end
 end
 
-local function setup()
-    ns.L:RegisterCallback("MERCHANT_SHOW", onEvent)
-    ns.L:RegisterCallback("MERCHANT_CLOSED", onEvent)
-end
-
-ns.L:RegisterModule("sellPoors", setup)
+ns.L:RegisterCallback("MERCHANT_SHOW", onEvent)
+ns.L:RegisterCallback("MERCHANT_CLOSED", onEvent)
