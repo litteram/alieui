@@ -1,0 +1,6 @@
+[submodule "libs/oUF"]
+	path = libs/oUF
+	url = https://github.com/oUF-wow/oUF.git
+[submodule "libs/oUF_FloatingCombatFeedback"]
+	path = libs/oUF_FloatingCombatFeedback
+	url = https://github.com/ls-/oUF_FloatingCombatFeedback.git

@@ -29,8 +29,6 @@ SlashCmdList["UMPD"] = function(msg)
 
     local mapID, x, y = string.match(msg,
                                      [[#?(%d*)%s*(%d+[.,]?%d+)%s+(%d+[.,]?%d+)]])
-    output(mapID, x, y)
-
     local playerMap = C_Map.GetBestMapForUnit("player")
     if mapID == "" or not mapID then
         mapID = playerMap

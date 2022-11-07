@@ -3,10 +3,21 @@
 ## Version: 10.0-001
 ## Notes: trinkets and baubles
 ## Author: alie
+## X-oUF: aLie
+
 libs/libs.xml
 
 core.lua
+fun.lua
+ff.lua
+config.lua
 modules/macros.lua
 modules/map_pins.lua
 modules/sell_poor.lua
 modules/fast_loot.lua
+
+modules/fade_ui.lua
+modules/fade_actionbars.lua
+
+unitframes/tags.lua
+unitframes/layout.lua

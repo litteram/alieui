@@ -34,8 +34,6 @@ local function sellGray()
 end
 
 local function onEvent(self,event)
-    if not ns.L.db.global.sellPoors then return end
-
     if event == "MERCHANT_SHOW" then
         stop = false
         wipe(list)
